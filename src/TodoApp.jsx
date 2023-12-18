@@ -11,6 +11,9 @@ const TodoApp = () => {
   const [newTodo,setNewTodo] = useState('');
   const [editIndex, setEditIndex] = useState(null);
   const [editText, setEditText] = useState('');
+  const [categories, setCategories] = useState(['All', 'Work', 'Personal', 'Shopping']);
+  const [selectedCategory,setSelectedCategories] = useState('All');
+  const [showCompleted,setShowCompleted] = useState(false);
 
   useEffect(()=> {
     localStorage.setItem('todos',
@@ -44,22 +47,53 @@ const TodoApp = () => {
     setTodos(newTodos);
   }
 
+  const filterTodos = () => {
+    let filterTodos = todos;
+
+    if (selectedCategory !== 'All') {
+      filterTodos = filterTodos.filter((todo) => todo.category === selectedCategory);
+    }
+
+    if (showCompleted) {
+      filterTodos = filterTodos.filter((todo) => todo.completed);
+    }
+
+    return filterTodos;
+  };
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  // return (
-  //   <>
-  //   "hai"
-  //   </>
-  // )
+  //here the render part 
+
+  return (
+ <>
+    <div className='App'>
+
+    <h1>Todo App</h1>
+
+    <div>
+
+    <input 
+   type="text"
+   placeholder='Add Todo...'
+   value={newTodo}
+   onChange={(e) => setNewTodo(e.target.value)}
+    />
+
+    <button onClick={addTodo}>Add</button>
+
+    </div>
+
+    <div>
+      <select value={selectedCategory} onChange={(e)=> setSelectedCategories(e.target.value)} >
+        {categories.map((category) => (
+          <option key={category} value={category}>{category}</option>
+        ))}
+      </select>
+    </div>
+
+    
+    </div>
+ </>
+  )
 }
 
 export default TodoApp
