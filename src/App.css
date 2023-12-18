@@ -2,6 +2,9 @@
 body {
   background: #041d45;
 }
+h1 {
+  color: white; 
+}
 
 
 .App {
@@ -43,12 +46,28 @@ li {
   background-color: #4CAF50;  /* Green background color */
   color: white;
   border: 1px solid #4CAF50;  /* Matching border color */
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
   /* Add more styles as needed */
 }
 
+/* .filter-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+} */
 
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  color: rgb(36, 164, 1);
+  /* Add any other styles you want */
+}
+
+.checkbox-input {
+  margin-right: 10px;
+}
 
 
 

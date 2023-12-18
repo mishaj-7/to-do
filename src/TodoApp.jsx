@@ -27,7 +27,7 @@ const TodoApp = () => {
     }
   };
 
-  const editTodo = (i) => {
+  const editTodo = (index, newText) => {
     const newTodos = [...todos];
     newTodos[index].text = newText;
     setTodos(newTodos);
@@ -37,7 +37,7 @@ const TodoApp = () => {
 
   const toggleTodo = (index) => {
     const newTodos = [...todos];
-    newTodos[index].completed = !newTodos(index).completed;
+    newTodos[index].completed = !newTodos[index].completed;
     setTodos(newTodos);
   };
 
@@ -70,18 +70,18 @@ const TodoApp = () => {
     <h1>Todo App</h1>
 
     <div>
-
+  <div>
     <input 
-   type="text"
-   placeholder='Add Todo...'
-   value={newTodo}
-   onChange={(e) => setNewTodo(e.target.value)}
+      className='todo-input'
+      type="text"
+      placeholder='Add Todo...'
+      value={newTodo}
+      onChange={(e) => setNewTodo(e.target.value)}
     />
+    <button className='add-button' onClick={addTodo}>Add</button>
+  </div>
 
-    <button onClick={addTodo}>Add</button>
-
-    </div>
-
+  <div className="filter-section">
     <div>
       <select value={selectedCategory} onChange={(e)=> setSelectedCategories(e.target.value)} >
         {categories.map((category) => (
@@ -89,11 +89,79 @@ const TodoApp = () => {
         ))}
       </select>
     </div>
-
     
+    <div className='checkbox-label'>
+      <label>
+        <input 
+          className='checkbox-input'
+          type="checkbox"
+          checked={showCompleted}
+          onChange={() => setShowCompleted(!showCompleted)} 
+        />
+        showCompleted
+      </label>
     </div>
+  </div>
+
+  {/* Todo list rendering */}
+  {/* ... */}
+</div>
+
+
+    {/* this ul listing the todo */}
+    <ul>
+      {/* {console.log(filterTodos)} */}
+
+      {filterTodos().map((todo,index) => (
+        
+
+        <li key={index}>{editIndex === index ? (
+          <>
+          <input type="text"
+          value={editText}
+          onChange={(e) => setEditIndex(e.target.value)}
+          />
+          <button onClick={() => editTodo(index,editIndex)}>Save</button>
+          </>
+        ) : (
+          <>
+          <span
+          className={todo.completed ? 'completed' : ''}
+          onClick={() => {
+            setEditIndex(index);
+            setEditText(todo.text);
+          }}
+          >
+          {todo.text}
+          </span>
+          <div> 
+
+            {/* complete button */}
+
+            <button className={`complete-btn ${todo.completed ? 'completed' : ''}`}
+              onClick={() => toggleTodo(index)}
+            >
+            {todo.completed ? 'Undo' : 'Complete'} 
+            </button>
+
+            {/* delete button */}
+
+            <button
+            className='delete-btn'
+            onClick={() => deleteTodo(index)}
+            >
+            Delete
+            </button>
+
+           </div>
+          </>
+         )}
+       </li>
+      ))}
+    </ul>
+  </div>
  </>
-  )
-}
+  );
+};
 
 export default TodoApp
