@@ -41,11 +41,23 @@ const TodoApp = () => {
     setTodos(newTodos);
   };
 
-  const deleteTodo =(index) => {
+  const deleteTodo = (index) => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-  }
+    
+    // Update: Filter todos based on the selected category
+    const filteredTodos = newTodos.filter(todo => {
+      if (selectedCategory === 'All') {
+        return true; // Return all todos if 'All' category is selected
+      } else {
+        return todo.category === selectedCategory;
+      }
+    });
+  
+    setTodos(filteredTodos);
+  };
+  
 
   const filterTodos = () => {
     let filterTodos = todos;
@@ -57,9 +69,12 @@ const TodoApp = () => {
     if (showCompleted) {
       filterTodos = filterTodos.filter((todo) => todo.completed);
     }
-
+    console.log(filterTodos);
     return filterTodos;
+    
   };
+
+  // console.log(filterTodos);
   
   //here the render part 
 
@@ -112,52 +127,53 @@ const TodoApp = () => {
     <ul>
       {/* {console.log(filterTodos)} */}
 
-      {filterTodos().map((todo,index) => (
-        
-
-        <li key={index}>{editIndex === index ? (
-          <>
-          <input type="text"
+      {filterTodos().map((todo, index) => (
+  <li key={index}>
+    {editIndex === index ? (
+      <>
+        <input
+          type="text"
           value={editText}
-          onChange={(e) => setEditIndex(e.target.value)}
-          />
-          <button onClick={() => editTodo(index,editIndex)}>Save</button>
-          </>
-        ) : (
-          <>
-          <span
-          className={todo.completed ? 'completed' : ''}
+          onChange={(e) => setEditText(e.target.value)}
+        />
+        <button onClick={() => editTodo(index, editText)}>Save</button>
+      </>
+    ) : (
+      <>
+        <span
+          className={`todo-text ${todo.completed ? 'completed' : ''}`}
           onClick={() => {
-            setEditIndex(index);
-            setEditText(todo.text);
+            if (!todo.completed) {
+              setEditIndex(index);
+              setEditText(todo.text);
+            }
           }}
-          >
+        >
           {todo.text}
-          </span>
-          <div> 
-
-            {/* complete button */}
-
-            <button className={`complete-btn ${todo.completed ? 'completed' : ''}`}
-              onClick={() => toggleTodo(index)}
-            >
-            {todo.completed ? 'Undo' : 'Complete'} 
-            </button>
-
-            {/* delete button */}
-
-            <button
+        </span>
+        <div>
+          {/* complete button */}
+          <button
+            className={`complete-btn ${todo.completed ? 'completed' : ''}`}
+            onClick={() => toggleTodo(index)}
+          >
+            {todo.completed ? 'Undo' : 'Complete'}
+          </button>
+          
+          {/* delete button */}
+          <button
             className='delete-btn'
             onClick={() => deleteTodo(index)}
-            >
+          >
             Delete
-            </button>
+          </button>
+        </div>
+      </>
+    )}
+  </li>
+))}
 
-           </div>
-          </>
-         )}
-       </li>
-      ))}
+      
     </ul>
   </div>
  </>
