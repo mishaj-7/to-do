@@ -133,59 +133,11 @@ const TodoApp = () => {
         <ul>
           {/* {console.log(filterTodos)} */}
 
-          {filterTodos().map((todo, index) => (
-            <li key={index}>
-              {editIndex === index ? (
-                <>
-                  <input
-                    type="text"
-                    value={editText}
-                    onChange={(e) => setEditText(e.target.value)}
-                  />
-                  <button onClick={() => editTodo(index, editText)}>
-                    Save
-                  </button>
-                </>
-              ) : (
-                <>
-                  <span
-                    className={`todo-text ${todo.completed ? "completed" : ""}`}
-                    onClick={() => {
-                      if (!todo.completed) {
-                        setEditIndex(index);
-                        setEditText(todo.text);
-                      }
-                    }}
-                  >
-                    {todo.text}
-                  </span>
-                  <div>
-                    {/* complete button */}
-                    <button
-                      className={`complete-btn ${
-                        todo.completed ? "completed" : ""
-                      }`}
-                      onClick={() => toggleTodo(index)}
-                    >
-                      {todo.completed ? "Undo" : "Complete"}
-                    </button>
-
-                    {/* delete button */}
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteTodo(index)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </>
-              )}
-            </li>
-          ))}
+          
         </ul>
       </div>
     </>
   );
 };
 
-export default TodoApp
+export default TodoAppZ
